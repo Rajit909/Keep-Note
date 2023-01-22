@@ -6,7 +6,6 @@ const NotesSchema = new mongoose.Schema({
         required: [true, "Email is required"],
         unique: true
     },
-
     notes: [
         {
             title: {
