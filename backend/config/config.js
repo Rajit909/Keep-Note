@@ -6,4 +6,5 @@ const config = {
     URI: process.env.URI,
 }
 
+
 export default config
