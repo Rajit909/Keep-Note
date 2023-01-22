@@ -1,5 +1,21 @@
 {
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rajit",
+  "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "d": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.4",
+    "nodemon": "^2.0.20",
+    "validator": "^13.7.0"
   }
 }
