@@ -61,7 +61,6 @@ export const updateNote =asyncHandler( async (req, res) => {
 })
 
 
-
 export const getNotes =asyncHandler( async (req, res) => {
     const { email } = req.body
 
