@@ -55,5 +55,7 @@ export const updateNote =asyncHandler( async (req, res) => {
         throw new CustomError("User not found", 400)
     }
 
-    
+    existingUser.notes.unshift({ title, note });
+
+    sendResponse(req, existingUser)
 })
