@@ -94,7 +94,6 @@ export const deleteNote =asyncHandler( async (req, res) => {
     allNotes.notes = newArray;
 
     await allNotes.save({ validateBeforeSave: false });
-
     sendResponse(res, allNotes);
 
 })
