@@ -76,3 +76,25 @@ export const getNotes =asyncHandler( async (req, res) => {
 
     res.status(200).send(notes);
 })
+
+
+export const deleteNote =asyncHandler( async (req, res) => {
+    const { email, id } = req.params;
+
+    if (!(email && id )) {
+        throw new CustomError("All fields are required", 400)
+    }
+
+    let allNotes = await NoteSchema.findOne({ email });
+
+    let newArray = allNotes.notes.filter((item) => {
+        return item.id !== id
+    });
+
+    allNotes.notes = newArray;
+
+    await allNotes.save({ validateBeforeSave: false });
+
+    sendResponse(res, allNotes);
+
+})
