@@ -59,3 +59,21 @@ export const updateNote =asyncHandler( async (req, res) => {
 
     sendResponse(req, existingUser)
 })
+
+
+
+export const getNotes =asyncHandler( async (req, res) => {
+    const { email } = req.body
+
+    if (!email) {
+        throw new CustomError("Email is required", 404)
+    }
+
+    const notes = await NoteSchema.findOne({ email })
+
+    if (!notes) {
+        throw new CustomError("Notes not found", 404)
+    }
+
+    res.status(200).send(notes);
+})
