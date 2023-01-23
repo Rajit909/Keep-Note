@@ -97,3 +97,41 @@ export const deleteNote =asyncHandler( async (req, res) => {
     sendResponse(res, allNotes);
 
 })
+
+export const editNote =asyncHandler( async (req, res) => {
+    const { title, note, email } = req.body;
+    const id = req.params.id;
+
+    if (!(title && note && email && id)) {
+        throw new CustomError("All fields are required", 400)
+    }
+
+    const existingUser = await NoteSchema.findOne({ email });
+
+    if (!existingUser) {
+        throw new CustomError("User not found", 400)
+    }
+
+    let filterNotes = existingUser.notes.filter((note) => {
+        return note.id !== id;
+    });
+
+    let singleOne = existingUser.notes.filter((note) => {
+        return note.id == id;
+    });
+
+    let newValue = {
+        title,
+        note,
+        CreatedAt: singleOne.CreatedAt,
+        UpdatedAt: Date.now(),
+    };
+
+    let finalNotes = [newValue, ...filterNotes];
+
+    existingUser.notes = finalNotes;
+
+    await existingUser.save({ validateBeforeSave: false })
+
+    sendResponse(res, existingUser)
+})
