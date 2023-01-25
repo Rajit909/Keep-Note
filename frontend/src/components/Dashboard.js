@@ -149,6 +149,31 @@ function Dashboard() {
     setAllNotes(data.data?.notes)
   };
 
+  // edit method
+  const editNote = async (title, note, id) => {
+    titleRef.current.value = title;
+    noteRef.current.value = note
+    setHoldId(id);
+    setUserNote({
+      title: titleRef.current.value,
+      note: noteRef.current.value
+    });
+    // windo scroll to(0,0)
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth"
+    })
+    setTimeout(() => {
+      titleRef.current.focus();
+    }, 1000);
+
+    updateBtnRef.current.style.display = "block";
+    addBtnRef.current.style.display = "none";
+  };
+
+  u\
+
   return (
     <>
     <div className='font-bold p-5 bg-orange-400 flex gap-10 '>
