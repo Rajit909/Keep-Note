@@ -210,6 +210,32 @@ function Dashboard() {
     setUserNote({ title:"", note: ""});
   };
 
+  // delete method
+  const deleteNote = async (e, id) => {
+    e.preventDefault();
+    let wantToDelete = window.confirm("Are you sure ? Want to delete it");
+    if (!wantToDelete) {
+      return;
+    }
+    let promise = axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/deletenote/${userData.email}/${id}`
+    );
+
+    const [data, err] = await handlePromise(promise);
+    if (data) {
+      alert("Note deleted")
+      fetchUserNotes();
+    }
+    if (err) {
+      console.log(err)
+      alert(err)
+    }
+  }
+
+
+
+
+
   return (
     <>
     <div className='font-bold p-5 bg-orange-400 flex gap-10 '>
