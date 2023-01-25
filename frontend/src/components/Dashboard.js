@@ -230,23 +230,159 @@ function Dashboard() {
       console.log(err)
       alert(err)
     }
-  }
+  };
 
+  
+  // search method
+  const searchNote = () => {
+    let response = allNotes.filter((note) => {
+      if (searchRef.current.value === "") {
+        return allNotes;
+      } else {
+        return note.title
+          .trim()
+          .toLowerCase()
+          .includes(searchText.toLocaleLowerCase());
+      }
+    });
 
-
-
+    return response;
+  };
 
   return (
     <>
-    <div className='font-bold p-5 bg-orange-400 flex gap-10 '>
-      <h1>
-      Dashboard
-      </h1>
-      <button>SignOut</button>
+     <Navbar name={userData?.displayName} logout={logout} />
+
+{/* Dashboard */}
+<div className="px-5  sm:px-10 lg:px-24">
+  <h1 className=" mt-2 sm:hidden font-semibold">
+    Hello {userData?.displayName} Add Your Note
+  </h1>
+  {userData?.emailVerified ? (
+    ""
+  ) : (
+    <NavLink
+      className="text-red-600 sm:block sm:py-2 inline "
+      onClick={verifyEmail}
+    >
+      Click here to verify your email
+    </NavLink>
+  )}
+</div>
+
+<div id="top" className="flex flex-col gap-2 px-5  sm:px-10 lg:px-24">
+  <input
+    ref={titleRef}
+    name="title"
+    type="text"
+    placeholder="Title"
+    className="border-2 border-blue-400 p-2 mt-3 font-semibold"
+    value={userNote.title}
+    onChange={(e) => setUserNote({ ...userNote, title: e.target.value })}
+  />
+  <textarea
+    ref={noteRef}
+    name="note"
+    cols="30"
+    rows="2"
+    placeholder="Note"
+    className="border-2 border-blue-400 p-2 font-medium"
+    value={userNote.note}
+    onChange={(e) => setUserNote({ ...userNote, note: e.target.value })}
+  ></textarea>
+
+  <h4 className=" font-semibold text-red-500">{showMsg}</h4>
+
+  <button
+    ref={addBtnRef}
+    className="bg-blue-700 py-2 mt-2 text-white font-semibold"
+    onClick={(e) => addNote(e)}
+  >
+    Add Note
+  </button>
+
+  <button
+    ref={updateBtnRef}
+    className="hidden bg-blue-700 py-2 mt-2 text-white font-semibold"
+    onClick={(e) => updateNote(e)}
+  >
+    Update Note
+  </button>
+</div>
+
+<div className="flex justify-between gap-4 px-5 mt-5  sm:px-10 lg:px-24">
+  <input
+    ref={searchRef}
+    value={searchText}
+    onChange={(e) => {
+      setSearchText(e.target.value);
+      const filterNote = searchNote();
+      setNotes(filterNote);
+    }}
+    name="title"
+    type="text"
+    placeholder="Search here"
+    className="border-2 px-4 border-orange-400 w-full"
+  />
+  <button
+    onClick={() => {
+      const filterNote = searchNote();
+      setNotes(filterNote);
+    }}
+    className="bg-[#FF6263] py-2 px-4 md:px-8 text-white font-semibold"
+  >
+    Search
+  </button>
+</div>
+
+<div className="mt-5 px-5 sm:px-10 lg:px-24 pb-4">
+  <h2 className="text-xl font-bold">Your Notes : </h2>
+</div>
+{Notes?.length ? (
+  Notes.map((note, index) => {
+    return (
+      <div
+        className="px-5 sm:px-10 lg:px-24 border-y-2 pt-5 pb-2 shadow-xl min-h-[120px]"
+        key={note._id}
+      >
+        <div className="flex justify-between gap-3">
+          <h3 className="text-lg text-blue-600 font-semibold leading-none">
+            {note.title}
+          </h3>
+          <div className="flex gap-4">
+            <button
+              onClick={() => editNote(note.title, note.note, note._id)}
+              className="bg-sky-600 h-[25px]  px-4  text-white font-semibold"
+            >
+              Edit
+            </button>
+
+            <button
+              onClick={(e) => deleteNote(e, note._id)}
+              className="bg-red-600 h-[25px]  px-4  text-white font-semibold"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+        <p className="mt-2 text-lg mb-3 text-[#0D0D0D] ">{note.note}</p>
+        <span className="text-[7px] md:text-sm block md:inline-block mb-[-29px] md:mb-0  mr-3">
+          <span className="text-blue-400">createdAt: </span>
+          {new Date(note?.CreatedAt).toString()}
+        </span>
+        <br className="md:hidden" />
+        <span className="text-[7px] md:text-sm ">
+          <span className="text-blue-400">updatedAt: </span>
+          {note.UpdatedAt
+            ? new Date(note?.UpdatedAt).toString()
+            : "Not Updated"}
+        </span>
       </div>
-
-    
-
+    );
+  })
+) : (
+  <h1 className="text-center font-semibold text-lg">Notes not found</h1>
+)}
     </>
   )
 }
