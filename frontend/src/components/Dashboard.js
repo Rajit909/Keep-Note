@@ -172,7 +172,43 @@ function Dashboard() {
     addBtnRef.current.style.display = "none";
   };
 
-  u\
+  // update method while editing
+
+  const updateNote = async (e) => {
+    e.preventDefault();
+
+    const value = {
+      title: userNote.title,
+      note: userNote.note,
+      email: userData.email,
+    };
+
+    let promise = axios.put(
+      `${process.env.REACT_APP_BACKEND_URL}/editNote/${holdId}`,
+      value
+    )
+
+    const [data, err] = await handlePromise(promise);
+    await fetchUserNotes();
+
+    if (err) {
+      setShowMsg(err)
+
+      setTimeout(() => {
+        setShowMsg("")
+      }, 4000);
+    }
+    if (data) {
+      setShowMsg("Note Upadted")
+      updateBtnRef.current.style.display = 'none';
+      addBtnRef.current.style.display = "block";
+
+      setTimeout(() => {
+        setShowMsg("")
+      }, 3000);
+    }
+    setUserNote({ title:"", note: ""});
+  };
 
   return (
     <>
