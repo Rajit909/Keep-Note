@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect, useRef, useState } from 'react'
 import axios from "axios"
 import {signOut, sendEmailVerification} from "firebase/auth"
-import { Auth } from 'firebase/auth'
+import { auth } from '../Firebase/firebase.config'
 import Navbar from "./Navbar"
 import { NavLink, useNavigate } from 'react-router-dom'
 import { async } from '@firebase/util'
@@ -43,7 +43,7 @@ function Dashboard() {
   }, [userData])
 
   const fetchData = async()=>{
-    Auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       setUserData(user);
 
       if (!user) {
@@ -82,7 +82,7 @@ function Dashboard() {
   const handlePromise = async (Promise) => {
     let data, err;
     try {
-      data = await promise;
+      data = await Promise;
     } catch (error) {
       err = error.message;
     }
@@ -90,7 +90,7 @@ function Dashboard() {
   };
 
   // adding note to database
-  const addnote = async (e) => {
+  const addNote = async (e) => {
     e.preventDefault();
 
     if (!(userNote.title && userNote.note && userData.email)) {
