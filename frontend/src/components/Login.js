@@ -2,6 +2,7 @@ import React,{useState, useEffect, useRef} from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { NavLink, useNavigate } from 'react-router-dom'
 import Social from "../components/Social.js"
+import {auth} from "../Firebase/firebase.config.js"
 import { async } from '@firebase/util';
 
 
@@ -38,9 +39,25 @@ function Login() {
     }
   };
   useEffect(() => {
-    
-  }, [third])
-  
+    try {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          navigate("/")
+        }
+      })
+    } catch (error) {
+      console.log(error)
+      message: error.message
+    }
+  }, []);
+
+  const showPassword = () => {
+    if (inputPassRef.current.type === "password") {
+      inputPassRef.current.type = "text";
+    }else{
+      inputPassRef.current.type = "password"
+    }
+  };
 
   return (
     <div>Login</div>
