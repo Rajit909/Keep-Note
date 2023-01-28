@@ -62,7 +62,6 @@ function Social() {
     }
   };
 
-
   return (
     <>
       <div className="flex mt-7 justify-center w-full gap-8">
