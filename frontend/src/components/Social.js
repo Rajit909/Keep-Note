@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
-import {auth, G_Provider, F_Provider } from "../Firebase/firebase.config.js"
+import {auth, Facebook_Provider, Google_Provider } from "../Firebase/firebase.config.js"
 import axios from 'axios'
 import {
   signInWithPopup,
   GoogleAuthProvider,
-  facebookAuthProvider,
-  FacebookAuthProvider
+  // FacebookAuthProvider
 } from "firebase/auth"
 import { useNavigate } from 'react-router-dom'
-import { async } from '@firebase/util'
 
 function Social() {
   const navigate = useNavigate();
@@ -19,7 +17,7 @@ function Social() {
   const googleSignIn = async(e) => {
     e.preventDefault();
     try {
-      const result = await signInWithPopup(auth, G_Provider);
+      const result = await signInWithPopup(auth, Google_Provider);
       // registered User info
       const user = result.user
       await axios.post(
@@ -43,7 +41,7 @@ function Social() {
   const facebookSignIn = async (e) => {
     e.preventDefault();
     try {
-      const result = await signInWithPopup(auth, F_Provider);
+      const result = await signInWithPopup(auth, Facebook_Provider);
       const user = result.user;
       await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/addnote`,{
@@ -54,11 +52,11 @@ function Social() {
         navigate("/")
     } catch (error) {
       console.log(error);
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const email = error.customData.email;
-      const credential = FacebookAuthProvider.credentialFromError(error);
-      setErrorMessage(error,message)
+      // const errorCode = error.code;
+      // const errorMessage = error.message;
+      // const email = error.customData.email;
+      // const credential = FacebookAuthProvider.credentialFromError(error);
+      setErrorMessage(error.message)
     }
   };
 

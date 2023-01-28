@@ -5,7 +5,6 @@ import {signOut, sendEmailVerification} from "firebase/auth"
 import { auth } from '../Firebase/firebase.config.js'
 import Navbar from "./Navbar.js"
 import { NavLink, useNavigate } from 'react-router-dom'
-import { async } from '@firebase/util'
 
 
 function Dashboard() {
@@ -110,7 +109,7 @@ function Dashboard() {
     value
   )
   
-  const [data, err] = await handlePromise(promise);
+  const [, err] = await handlePromise(promise);
   await fetchUserNotes();
 
   if (err) {

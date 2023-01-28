@@ -25,4 +25,4 @@ const auth = getAuth(app)
 const Google_Provider = new GoogleAuthProvider(app)
 const Facebook_Provider = new FacebookAuthProvider(app)
 
-export default { Facebook_Provider, Google_Provider, auth}
+export {auth, Facebook_Provider, Google_Provider}

@@ -3,7 +3,6 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 import { NavLink, useNavigate } from 'react-router-dom'
 import Social from "../components/Social.js"
 import {auth} from "../Firebase/firebase.config.js"
-import { async } from '@firebase/util';
 
 
 function Login() {
