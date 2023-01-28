@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import Social from "./Social.js"
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
-import {auth} from "../Firebase/firebase.config"
+import {auth} from "../Firebase/firebase.config.js"
 import axios from 'axios'
 
 

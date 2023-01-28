@@ -2,8 +2,8 @@ import React from 'react'
 import { useEffect, useRef, useState } from 'react'
 import axios from "axios"
 import {signOut, sendEmailVerification} from "firebase/auth"
-import { auth } from '../Firebase/firebase.config'
-import Navbar from "./Navbar"
+import { auth } from '../Firebase/firebase.config.js'
+import Navbar from "./Navbar.js"
 import { NavLink, useNavigate } from 'react-router-dom'
 import { async } from '@firebase/util'
 
